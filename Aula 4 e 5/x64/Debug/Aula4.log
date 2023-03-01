@@ -1,0 +1,21 @@
+﻿  main.c
+C:\Users\morei\Desktop\VC\Aula4\main.c(7,1): error C2085: 'main': not in formal parameter list
+C:\Users\morei\Desktop\VC\Aula4\main.c(7,1): error C2143: syntax error: missing ';' before '{'
+  vc.c
+C:\Users\morei\Desktop\VC\Aula4\vc.c(27,1): error C2082: redefinition of formal parameter 'vc_image_new'
+C:\Users\morei\Desktop\VC\Aula4\vc.c(27,1): error C2143: syntax error: missing ';' before '{'
+C:\Users\morei\Desktop\VC\Aula4\vc.c(30,32): warning C4047: 'return': 'int' differs in levels of indirection from 'void *'
+C:\Users\morei\Desktop\VC\Aula4\vc.c(31,14): error C2065: 'levels': undeclared identifier
+C:\Users\morei\Desktop\VC\Aula4\vc.c(31,31): error C2065: 'levels': undeclared identifier
+C:\Users\morei\Desktop\VC\Aula4\vc.c(31,50): warning C4047: 'return': 'int' differs in levels of indirection from 'void *'
+C:\Users\morei\Desktop\VC\Aula4\vc.c(33,22): error C2065: 'width': undeclared identifier
+C:\Users\morei\Desktop\VC\Aula4\vc.c(34,24): error C2065: 'height': undeclared identifier
+C:\Users\morei\Desktop\VC\Aula4\vc.c(35,28): error C2065: 'channels': undeclared identifier
+C:\Users\morei\Desktop\VC\Aula4\vc.c(36,24): error C2065: 'levels': undeclared identifier
+C:\Users\morei\Desktop\VC\Aula4\vc.c(42,30): warning C4047: 'return': 'int' differs in levels of indirection from 'IVC *'
+C:\Users\morei\Desktop\VC\Aula4\vc.c(45,14): warning C4047: 'return': 'int' differs in levels of indirection from 'IVC *'
+C:\Users\morei\Desktop\VC\Aula4\vc.c(245,13): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\morei\Desktop\VC\Aula4\vc.c(285,13): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\morei\Desktop\VC\Aula4\vc.c(367,5): error C2084: function 'int vc_gray_negative(IVC *)' already has a body
+C:\Users\morei\Desktop\VC\Aula4\vc.h(41,5): message : see previous definition of 'vc_gray_negative'
+  Generating Code...
