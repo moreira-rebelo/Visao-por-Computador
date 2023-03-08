@@ -617,3 +617,151 @@ int vc_rgb_to_gray(IVC* src, IVC* dst)
 		}
 	return 1;
 }
+
+int vc_rgb_to_hsv(IVC* src, IVC* dst) {
+	unsigned char* datasrc = (unsigned char*)src->data;
+	unsigned char* datadst = (unsigned char*)dst->data;
+	int width = src->width;
+	int height = src->height;
+	int channels = src->channels;
+	int x, y;
+	long int pos_src, pos_dst;
+	float r, g, b, h, s, v, min, max, delta;
+
+	// Verificação de erros
+	if ((src->width <= 0) || (src->height <= 0) || (src->data == NULL)) return 0;
+	if ((src->width != dst->width) || (src->height != dst->height) || (dst->channels != 3)) return 0;
+	if (src->channels != 3) return 0;
+
+	for (y = 0; y < height; y++) {
+		for (x = 0; x < width; x++) {
+			pos_src = y * width * channels + x * channels;
+			pos_dst = y * width * 3 + x * 3;
+
+			r = (float)datasrc[pos_src];
+			g = (float)datasrc[pos_src + 1];
+			b = (float)datasrc[pos_src + 2];
+
+			min = r < g ? r : g;
+			min = min < b ? min : b;
+
+			max = r > g ? r : g;
+			max = max > b ? max : b;
+
+			v = max;
+			delta = max - min;
+			if (max > 0.0) {
+				s = (delta / max);
+			}
+			else {
+				s = 0.0;
+				h = -1.0;
+				continue;
+			}
+			if (r >= max)
+				h = (g - b) / delta;
+			else if (g >= max)
+				h = 2.0 + (b - r) / delta;
+			else
+				h = 4.0 + (r - g) / delta;
+
+			h *= 60.0;
+
+			if (h < 0.0) h += 360.0;
+
+			datadst[pos_dst] = (unsigned char)h;
+			datadst[pos_dst + 1] = (unsigned char)(s * 255);
+			datadst[pos_dst + 2] = (unsigned char)(v * 255);
+		}
+	}
+
+	return 1;
+}
+
+/*int vc_rgb_to_hsv(IVC* src, IVC* dst) {
+
+	// Info da Source Image (src)
+	unsigned char* datasrc = (unsigned char*)src->data;
+	int bytesperline_src = src->width * src->channels;
+	int channels_src = src->channels;
+
+	// Info da Imagem Destino (dst)
+	unsigned char* datadst = (unsigned char*)dst->data;
+	int bytesperline_dst = dst->width * dst->channels;
+	int channels_dst = dst->channels;
+
+	// Width e Height da imagem Src
+	int width = src->width;
+	int height = src->height;
+
+	// Aux Variable
+	int x, y;
+	long int pos_src, pos_dst;
+	float red, green, blue;
+
+	// Hsv floats
+	float hue, saturation, value;
+	float max, min;
+
+
+
+	// Verificação de erros
+	if ((src->width <= 0) || (src->height <= 0) || (src->data == NULL)) return 0;
+	if ((src->width != dst->width) || (src->height != dst->height)) return 0;
+	if ((src->channels != 3) || (dst->channels != 3)) return 0;
+
+	for (y = 0; y < height; y++) {
+
+		for (x = 0; x < width; x++) {
+
+			pos_src = y * bytesperline_src + x * channels_src; // Posição src
+			pos_dst = y * bytesperline_dst + x * channels_dst; // Posição dst
+
+
+			red = (float)datasrc[pos_src]; // red
+			green = (float)datasrc[pos_src + 1]; // green
+			blue = (float)datasrc[pos_src + 2]; // blue
+
+
+			// Cálcular Máximo e Mínimo
+			max = (red > green && red > blue) ? red : (green > red && green > blue) ? green : blue;
+			min = (red < green && red < blue) ? red : (green < red && green < blue) ? green : blue;
+
+			// Declarar os valores para o HSV
+			value = max;
+			saturation = (max - min) / value;
+
+			// Calcular o Hue
+			if ((max == red) && (green >= blue)) {
+				hue = 60 * (green - blue) / (max - min);
+			}
+			else if ((max == red) && (blue >= green)) {
+				hue = 360 + 60 * (green - blue) / (max - min);
+			}
+			else if (max == green) {
+				hue = 120 + 60 * (blue - red) / (max - min);
+			}
+			else if (max == blue) {
+				hue = 240 + 60 * (red - green) / (max - min);
+			}
+
+
+			// datadst[pos_dst] = (unsigned char) (hue);
+			// datadst[pos_dst + 1] = (unsigned char) (saturation);
+			// datadst[pos_dst + 2] = (unsigned char) (value);
+
+			dst->data[pos_dst] = (unsigned char)(hue / 2.0f);
+			dst->data[pos_dst + 1] = (unsigned char)(saturation * 255.0f);
+			dst->data[pos_dst + 2] = (unsigned char)(value);
+
+		}
+
+	}
+
+	return 1;
+
+
+
+
+
+}*/

@@ -55,3 +55,6 @@ int vc_rgb_get_blue_gray(IVC* srcdst);
 
 //RGB to Gray
 int vc_rgb_to_gray(IVC* src, IVC* dst);
+
+//RGB to HSV
+int vc_rgb_to_hsv(IVC* src, IVC* dst);
